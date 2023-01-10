@@ -34,7 +34,7 @@ namespace App1.WebApi.Controllers
         {
             try
             {
-                using (var activity = Activity.StartActivity("RabbitMq Publish", ActivityKind.Producer))
+                using (var activity = Activity.StartActivity("RabbitMq Publish", ActivityKind.Internal))
                 {
                     Baggage.SetBaggage("App1", "PublishMessageController");
                     var factory = new ConnectionFactory { HostName = _configuration["RabbitMq:Host"] };

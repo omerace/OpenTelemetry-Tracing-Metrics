@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using App3.WebApi.Domain.Interfaces;
 using App3.WebApi.Events;
-using App3.WebApi.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,7 +11,7 @@ using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using RabbitMQ.Client;
 
-namespace App3.WebApi.Repository
+namespace App3.WebApi.Infrastructure.Repositories
 {
     public class RabbitRepository : IRabbitRepository
     {
@@ -33,7 +33,7 @@ namespace App3.WebApi.Repository
         {
             try
             {
-                using (var activity = Activity.StartActivity("RabbitMq Publish", ActivityKind.Producer))
+                using (var activity = Activity.StartActivity("RabbitMq Publish", ActivityKind.Internal))
                 {
                     var factory = new ConnectionFactory { HostName = _configuration["RabbitMq:Host"] };
                     using (var connection = factory.CreateConnection())
@@ -70,9 +70,6 @@ namespace App3.WebApi.Repository
         private void AddActivityToHeader(Activity activity, IBasicProperties props)
         {
             Propagator.Inject(new PropagationContext(activity.Context, Baggage.Current), props, InjectContextIntoHeader);
-            activity?.SetTag("messaging.system", "rabbitmq");
-            activity?.SetTag("messaging.destination_kind", "queue");
-            activity?.SetTag("messaging.rabbitmq.queue", "sample_2");
         }
 
         private void InjectContextIntoHeader(IBasicProperties props, string key, string value)

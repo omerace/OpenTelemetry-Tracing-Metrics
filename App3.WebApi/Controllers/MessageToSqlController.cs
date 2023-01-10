@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using App3.WebApi.Domain.Interfaces;
 using App3.WebApi.Events;
-using App3.WebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
@@ -14,6 +14,7 @@ namespace App3.WebApi.Controllers
         private readonly ISqlRepository _repository;
         private readonly IRabbitRepository _eventPublisher;
         private readonly ILogger<MessageToSqlController> _logger;
+
 
         public MessageToSqlController(ISqlRepository repository, 
             IRabbitRepository eventPublisher, 

@@ -19,6 +19,8 @@ namespace App4.RabbitConsumer.HostedService
     {
         private static readonly ActivitySource Activity = new(nameof(Worker));
         private static readonly TextMapPropagator Propagator = new TraceContextPropagator();
+        private static readonly TextMapPropagator BaggagePropagator = new BaggagePropagator();
+        private static readonly TextMapPropagator BasePropagator = Propagators.DefaultTextMapPropagator;
 
         private readonly ILogger<Worker> _logger;
         private readonly IDistributedCache _cache;
@@ -64,27 +66,39 @@ namespace App4.RabbitConsumer.HostedService
                 autoAck: true,
                 consumer: consumer);
         }
-
         private async Task ProcessMessage(BasicDeliverEventArgs ea)
+        {
+            var parentContext = Propagator.Extract(default, ea.BasicProperties, ActivityHelper.ExtractTraceContextFromBasicProperties);
+
+            using (var activity = Activity.StartActivity("Process Message", ActivityKind.Internal, parentContext.ActivityContext))
+            {
+                await ProcessMessageWActivity(ea);
+            }
+
+        }
+        private async Task ProcessMessageWActivity(BasicDeliverEventArgs ea)
         {
             try
             {
-                var parentContext = Propagator.Extract(default, 
-                    ea.BasicProperties, 
-                    ActivityHelper.ExtractTraceContextFromBasicProperties);
 
-                Baggage.Current = parentContext.Baggage;
+                var item2 = await _cache.GetStringAsync("rabbit.message");
 
-                using (var activity = Activity.StartActivity("Process Message", ActivityKind.Consumer, parentContext.ActivityContext))
-                {
+                //using (var activity = Activity.StartActivity("Process Message", ActivityKind.Internal, parentContext.ActivityContext))
+                //{
                     var bg1 = Baggage.GetBaggage("App1");
                     var bg2 = Baggage.GetBaggage("App2");
                     var bg3 = Baggage.GetBaggage("App3");
 
+                    foreach (var key in ea.BasicProperties.Headers.Keys)
+                    {
+                        var val = ea.BasicProperties.Headers[key];
+                        var valbytes = val as byte[];
+                        var vatstr = Encoding.UTF8.GetString(valbytes);
+                    }
+
                     var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
 
-                    ActivityHelper.AddActivityTags(activity);
 
                     _logger.LogInformation("Message Received: " + message);
 
@@ -100,7 +114,7 @@ namespace App4.RabbitConsumer.HostedService
                                 AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
                             });
                     }
-                }
+                //}
 
             }
             catch (Exception ex)

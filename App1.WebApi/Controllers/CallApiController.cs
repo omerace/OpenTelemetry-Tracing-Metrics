@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Diagnostics;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +16,7 @@ namespace App1.WebApi.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger<CallApiController> _logger;
+        private static readonly ActivitySource ActivitySource = new(nameof(CallApiController));
 
         public CallApiController(
             IHttpClientFactory httpClientFactory, 
@@ -28,7 +31,25 @@ namespace App1.WebApi.Controllers
         [HttpGet]
         public async Task<string> Get()
         {
-            Baggage.SetBaggage("App1", "CallApiController");
+
+            using (var parentActivity = ActivitySource.StartActivity("Parent Span"))
+            {
+                _logger.LogInformation($"Logging current activity: {JsonSerializer.Serialize(Activity.Current)}");
+
+                using (var childActivity = ActivitySource.StartActivity("Child Span"))
+                {
+                    _logger.LogInformation($"Logging current activity: {JsonSerializer.Serialize(Activity.Current)}");
+                    var childResponse = await _httpClientFactory
+                        .CreateClient()
+                        .GetStringAsync(_configuration["App3Endpoint"]);
+                }
+                using (var childActivity = ActivitySource.StartActivity("Child Span"))
+                {
+                    _logger.LogInformation($"Logging current activity: {JsonSerializer.Serialize(Activity.Current)}");
+                }
+            }
+
+                Baggage.SetBaggage("App1", "CallApiController");
             _logger.LogInformation($"Calling App3: {_configuration["App3Endpoint"]}");
             var response  = await _httpClientFactory
                 .CreateClient()

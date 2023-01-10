@@ -22,6 +22,7 @@ namespace App3.WebApi.Controllers
         [HttpGet]
         public string Get()
         {
+            //var source = Activity.Current.Source; new ActivitySource();
             _logger.LogInformation($"Logging current activity: {JsonSerializer.Serialize(Activity.Current)}");
             return "Ok";
         }

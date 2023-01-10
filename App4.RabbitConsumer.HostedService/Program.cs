@@ -42,7 +42,14 @@ namespace App4.RabbitConsumer.HostedService
                             .Configure((sp, builder) =>
                               {
                                   RedisCache cache = (RedisCache)sp.GetRequiredService<IDistributedCache>();
-                                  builder.AddRedisInstrumentation(cache.GetConnection());
+                                  builder.AddRedisInstrumentation(cache.GetConnection(), opts =>
+                                  {
+                                      opts.Enrich = (activity, profile) =>
+                                      {
+                                          activity?.SetTag("cacheCustomTag", "Enriched cache");
+                                          //activity.DisplayName = profile.
+                                      };
+                                  });
                               })
                             .AddSource(nameof(Worker))
                             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("App4"))

@@ -34,6 +34,7 @@ namespace App1.WebApi
                 builder.AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddSource(nameof(PublishMessageController))
+                    .AddSource(nameof(CallApiController))
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("App1"))
                     .AddOtlpExporter(opts =>
                     {

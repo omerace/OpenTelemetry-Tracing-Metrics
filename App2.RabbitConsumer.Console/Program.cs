@@ -22,6 +22,7 @@ namespace App2.RabbitConsumer.Console
     {
         private static readonly ActivitySource Activity = new(nameof(Program));
         private static readonly TextMapPropagator Propagator = new TraceContextPropagator();
+        private static readonly TextMapPropagator BaggagePropagator = new BaggagePropagator();
 
         private static IConfiguration _configuration;
         private static ILogger<Program> _logger;
@@ -85,11 +86,16 @@ namespace App2.RabbitConsumer.Console
             try
             {
                 var parentContext = Propagator.Extract(default, ea.BasicProperties, ExtractTraceContextFromBasicProperties);
-                Baggage.Current = parentContext.Baggage;
+
+                var parentBaggage = BaggagePropagator.Extract(default,
+                    ea.BasicProperties,
+                    ExtractTraceContextFromBasicProperties);
+
+                Baggage.Current = parentBaggage.Baggage;
 
                 var bg = Baggage.GetBaggage("App1");
                 Baggage.SetBaggage("App2", "ProcessMessage");
-                using (var activity = Activity.StartActivity("Process Message", ActivityKind.Consumer, parentContext.ActivityContext))
+                using (var activity = Activity.StartActivity("Process Message", ActivityKind.Internal, parentContext.ActivityContext))
                 {
 
                     var body = ea.Body.ToArray();

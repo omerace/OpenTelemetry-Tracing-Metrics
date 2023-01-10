@@ -40,17 +40,18 @@ services:
     image: rabbitmq:3.6.15-management
     ports:
       - 15672:15672
-      - 5672
+      - 5672:5672
     networks:
       - tracing
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Pass@Word1
+    build: 
+      context: ./scripts/sql
     ports:
-      - 1433
+      - "1433:1433"  
+    environment:
+      SA_PASSWORD: "P@ssw0rd?"
+      ACCEPT_EULA: "Y"
     networks:
       - tracing
 
@@ -65,6 +66,9 @@ services:
     image: jaegertracing/all-in-one
     container_name: jaeger
     restart: unless-stopped
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://host.docker.internal:9200
     ports:
       - 5775:5775/udp
       - 5778:5778

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace App3.WebApi.Repository
+namespace App3.WebApi.Domain.Interfaces
 {
     public interface ISqlRepository
     {

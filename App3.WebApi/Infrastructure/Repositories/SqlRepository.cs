@@ -1,8 +1,9 @@
 ﻿using System.Data.SqlClient;
 using System.Threading.Tasks;
+using App3.WebApi.Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace App3.WebApi.Repository
+namespace App3.WebApi.Infrastructure.Repositories
 {
     public class SqlRepository : ISqlRepository
     {
