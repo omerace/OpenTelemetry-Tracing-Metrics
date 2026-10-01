@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMK Otomotiv – Ana Sayfa</title>
+<style>
+:root{--red:#d7261e;--red-d:#b11c15;--ink:#141618;--ink-2:#3b4046;--muted:#6b7280;--line:#e5e7eb;--bg:#f5f6f8;--card:#fff;--wa:#25d366;--yellow:#ffc107}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+.topbar{background:var(--ink);color:#cfd3d8;font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:36px}
+.topbar b{color:#fff}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0}
+header .wrap{display:flex;align-items:center;gap:22px;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.5px;white-space:nowrap;flex:none}
+.logo .mark{width:42px;height:42px;background:var(--red);border-radius:8px;display:grid;place-items:center;color:#fff;font-size:15px;font-weight:900}
+.logo small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:1.5px;line-height:1}
+.search{flex:1;min-width:240px;display:flex;border:2px solid var(--line);border-radius:10px;overflow:hidden}
+.search input{flex:1;min-width:0;border:0;padding:12px 16px;font-size:15px;outline:0}
+.search button{background:var(--red);color:#fff;border:0;padding:0 18px;font-weight:700;font-size:14px;flex:none}
+nav{display:flex;gap:16px;font-weight:600;font-size:14px;flex:none;white-space:nowrap}
+nav a.active{color:var(--red)}
+.btn{display:inline-flex;white-space:nowrap;flex:none;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;font-weight:700;font-size:15px;border:0;cursor:pointer}
+.btn-wa{background:var(--wa);color:#fff}
+header .btn{padding:11px 16px;font-size:14px}
+.btn-red{background:var(--red);color:#fff}
+.btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.hero{background:linear-gradient(110deg,#17191c 0%,#24282d 55%,#3a1c1a 100%);color:#fff;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:64px 24px}
+.hero h1{font-size:46px;line-height:1.1;font-weight:800;letter-spacing:-1px}
+.hero h1 span{color:#ff5a4f}
+.hero p{margin:18px 0 28px;color:#c7ccd2;font-size:18px;max-width:520px}
+.hero .ctas{display:flex;gap:12px}
+.chips{display:flex;gap:10px;margin-top:28px}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600}
+.finder{background:#fff;color:var(--ink);border-radius:16px;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.finder h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.finder p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.finder label{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin:12px 0 6px;text-transform:uppercase;letter-spacing:.6px}
+.sel{border:2px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;font-size:15px;background:#fafafa}
+.sel.on{border-color:var(--red);background:#fff;font-weight:600}
+.finder .btn{width:100%;justify-content:center;margin-top:18px}
+.brands{background:#fff;border-bottom:1px solid var(--line)}
+.brands .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:28px 24px}
+.brand{display:flex;align-items:center;gap:16px;padding:18px 22px;border:2px solid var(--line);border-radius:14px}
+.brand .lg{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:13px}
+.brand b{display:block;font-size:18px}
+.brand span{font-size:13px;color:var(--muted)}
+section{padding:56px 0}
+.sec-h{display:flex;justify-content:space-between;align-items:end;margin-bottom:26px}
+.sec-h h2{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.sec-h a{color:var(--red);font-weight:700;font-size:14px}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 14px;text-align:center}
+.cat .ic{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;background:#fdecea;display:grid;place-items:center}
+.cat b{font-size:14px;display:block}
+.cat span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:relative}
+.prod .img{height:170px;background:linear-gradient(160deg,#eceff3,#d9dde3);display:grid;place-items:center}
+.prod .tag{position:absolute;top:12px;left:12px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:6px}
+.prod .tag.oem{background:var(--ink)}
+.prod .body{padding:16px}
+.prod .cat-l{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.prod h4{font-size:15px;font-weight:700;margin:4px 0 10px;line-height:1.3}
+.prod .row{display:flex;justify-content:space-between;align-items:center}
+.price{font-size:19px;font-weight:800}
+.price s{font-size:13px;color:var(--muted);font-weight:500;margin-right:6px}
+.prod .btn{padding:9px 13px;font-size:13px;border-radius:8px}
+.why{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.why .items{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.why .it{display:flex;gap:14px}
+.why .ic{width:48px;height:48px;border-radius:12px;background:#fdecea;color:var(--red);display:grid;place-items:center;flex:none}
+.why b{display:block;font-size:16px;margin-bottom:4px}
+.why span{font-size:14px;color:var(--muted)}
+.cta{background:var(--red);color:#fff}
+.cta .wrap{display:flex;justify-content:space-between;align-items:center;padding:40px 24px}
+.cta h3{font-size:26px;font-weight:800}
+.cta p{opacity:.9;margin-top:6px}
+.cta .btn{background:#fff;color:var(--red)}
+footer{background:var(--ink);color:#aeb4bb;font-size:14px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:40px;padding:52px 24px 36px}
+footer h5{color:#fff;font-size:15px;margin-bottom:14px}
+footer li{list-style:none;margin:8px 0}
+footer .copy{border-top:1px solid #2a2e33;padding:18px 24px;display:flex;justify-content:space-between;font-size:13px}
+svg{display:block}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <div>📍 Yenimahalle / ANKARA &nbsp;&nbsp;|&nbsp;&nbsp; ☎ <b>0542 126 06 00</b> &nbsp;&nbsp;|&nbsp;&nbsp; Hafta içi 08:30 – 19:00</div>
+  <div>Aynı gün kargo &nbsp;·&nbsp; Türkiye geneli teslimat &nbsp;·&nbsp; <b>WhatsApp'tan sipariş</b></div>
+</div></div>
+
+<header><div class="wrap">
+  <a class="logo" href="#"><div class="mark">GMK</div><div>GMK Otomotiv<small>RENAULT · FIAT · DACIA</small></div></a>
+  <div class="search"><input placeholder="Parça adı, OEM no veya araç modeli ara… (örn. Clio 4 tampon)"><button>ARA</button></div>
+  <nav><a class="active" href="#">Ana Sayfa</a><a href="#">Ürünler</a><a href="#">Markalar</a><a href="#">Hakkımızda</a><a href="#">İletişim</a></nav>
+  <a class="btn btn-wa" href="#">💬 WhatsApp</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <div class="chip" style="display:inline-block;margin-bottom:18px;background:rgba(215,38,30,.25);border-color:rgba(255,90,79,.5)">Ankara'nın Renault · Fiat · Dacia Yedek Parça Uzmanı</div>
+    <h1>Orijinal ve Muadil<br>Yedek Parça, <span>Doğru Fiyata</span></h1>
+    <p>Ön tampon, panjur, sis farı ve daha fazlası. Markanızı ve modelinizi seçin, seçtiğiniz parçayı tek tıkla WhatsApp'tan bize gönderin; stok ve fiyat bilgisini anında alın.</p>
+    <div class="ctas"><a class="btn btn-red" href="#">Ürünleri İncele →</a><a class="btn btn-ghost" href="#" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3)">📞 Hemen Ara</a></div>
+    <div class="chips"><span class="chip">✔ Güvenilir markalar</span><span class="chip">✔ Aynı gün kargo</span><span class="chip">✔ 2.500+ ürün çeşidi</span></div>
+  </div>
+  <div class="finder">
+    <h3>Aracınıza Uygun Parçayı Bulun</h3>
+    <p>Marka ve model seçerek uyumlu parçaları listeleyin.</p>
+    <label>Marka</label><div class="sel on"><span>Renault</span><span>▾</span></div>
+    <label>Model</label><div class="sel on"><span>Clio 4 (2012 – 2019)</span><span>▾</span></div>
+    <label>Parça Grubu</label><div class="sel"><span style="color:#9aa0a6">Seçiniz (Tampon, Panjur, Far…)</span><span>▾</span></div>
+    <a class="btn btn-red" href="#">🔍 Parçaları Listele</a>
+  </div>
+</div></div>
+
+<div class="brands"><div class="wrap">
+  <div class="brand"><div class="lg" style="background:#ffcc00;color:#111">RENAULT</div><div><b>Renault Yedek Parça</b><span>Clio, Megane, Symbol, Kangoo, Fluence…</span></div></div>
+  <div class="brand"><div class="lg" style="background:#8c1d1d">FIAT</div><div><b>Fiat Yedek Parça</b><span>Egea, Linea, Doblo, Fiorino, Punto…</span></div></div>
+  <div class="brand"><div class="lg" style="background:#1d3f8c">DACIA</div><div><b>Dacia Yedek Parça</b><span>Sandero, Duster, Logan, Dokker, Lodgy…</span></div></div>
+</div></div>
+
+<section><div class="wrap">
+  <div class="sec-h"><h2>Parça Kategorileri</h2><a href="#">Tüm kategoriler →</a></div>
+  <div class="cats">
+    <div class="cat"><div class="ic">🚗</div><b>Ön Tampon</b><span>Orijinal & muadil</span></div>
+    <div class="cat"><div class="ic">🔲</div><b>Panjur</b><span>Ön ızgara setleri</span></div>
+    <div class="cat"><div class="ic">💡</div><b>Sis Farı</b><span>Sağ / sol</span></div>
+    <div class="cat"><div class="ic">🔦</div><b>Far & Stop</b><span>Ön far, arka stop</span></div>
+    <div class="cat"><div class="ic">🪞</div><b>Ayna</b><span>Kapak, cam, komple</span></div>
+    <div class="cat"><div class="ic">🛡️</div><b>Çamurluk & Kaput</b><span>Kaporta parçaları</span></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><h2>Öne Çıkan Ürünler</h2><a href="#">Tüm ürünler →</a></div>
+  <div class="grid">
+    <div class="prod"><span class="tag">İNDİRİM</span><div class="img"><svg width="150" height="70" viewBox="0 0 150 70"><path d="M5 45 Q20 15 75 12 Q130 15 145 45 L145 60 L5 60 Z" fill="#8b949e"/><rect x="25" y="40" width="100" height="10" rx="3" fill="#5c646d"/></svg></div><div class="body"><div class="cat-l">Renault · Clio 4</div><h4>Clio 4 Ön Tampon (2012-2016) Muadil</h4><div class="row"><div class="price"><s>₺2.450</s>₺1.890</div><a class="btn btn-wa" href="#">💬 Sor</a></div></div></div>
+    <div class="prod"><span class="tag oem">ORİJİNAL</span><div class="img"><svg width="150" height="70" viewBox="0 0 150 70"><rect x="10" y="15" width="130" height="40" rx="6" fill="#4b535b"/><g fill="#8b949e"><rect x="18" y="22" width="114" height="5"/><rect x="18" y="32" width="114" height="5"/><rect x="18" y="42" width="114" height="5"/></g></svg></div><div class="body"><div class="cat-l">Fiat · Egea</div><h4>Fiat Egea Ön Panjur Kromlu (2015-2020)</h4><div class="row"><div class="price">₺1.350</div><a class="btn btn-wa" href="#">💬 Sor</a></div></div></div>
+    <div class="prod"><span class="tag">YENİ</span><div class="img"><svg width="110" height="70" viewBox="0 0 110 70"><ellipse cx="55" cy="35" rx="48" ry="28" fill="#4b535b"/><ellipse cx="55" cy="35" rx="34" ry="18" fill="#dfe4ea"/><ellipse cx="55" cy="35" rx="12" ry="8" fill="#9aa4ae"/></svg></div><div class="body"><div class="cat-l">Dacia · Duster</div><h4>Duster Sis Farı Sağ (2018+) Muadil</h4><div class="row"><div class="price">₺640</div><a class="btn btn-wa" href="#">💬 Sor</a></div></div></div>
+    <div class="prod"><span class="tag oem">ORİJİNAL</span><div class="img"><svg width="150" height="70" viewBox="0 0 150 70"><path d="M10 50 Q30 20 90 18 L140 25 L140 55 L10 55 Z" fill="#4b535b"/><path d="M20 48 Q40 28 90 26 L130 32 L130 48 Z" fill="#dfe4ea"/></svg></div><div class="body"><div class="cat-l">Renault · Megane 4</div><h4>Megane 4 Sol Ön Far LED (2016-2020)</h4><div class="row"><div class="price">₺7.900</div><a class="btn btn-wa" href="#">💬 Sor</a></div></div></div>
+  </div>
+</div></section>
+
+<div class="why"><section><div class="wrap">
+  <div class="items">
+    <div class="it"><div class="ic">✔</div><div><b>Güvenilir Markalar</b><span>Yalnızca orijinal ve kaliteli muadil üreticilerden tedarik.</span></div></div>
+    <div class="it"><div class="ic">🚚</div><div><b>Aynı Gün Kargo</b><span>Saat 15:00'e kadar verilen siparişler aynı gün yola çıkar.</span></div></div>
+    <div class="it"><div class="ic">💬</div><div><b>WhatsApp Destek</b><span>Parça uyumunu şase no ile birlikte anında teyit ediyoruz.</span></div></div>
+    <div class="it"><div class="ic">🏷️</div><div><b>Uygun Fiyat Garantisi</b><span>Toptan tedarik avantajını müşterilerimize yansıtıyoruz.</span></div></div>
+  </div>
+</div></section></div>
+
+<div class="cta"><div class="wrap">
+  <div><h3>Aradığınız parçayı bulamadınız mı?</h3><p>Şase numaranızı ve parça fotoğrafını gönderin, 10 dakika içinde dönüş yapalım.</p></div>
+  <a class="btn" href="#">💬 WhatsApp'tan Yazın · 0542 126 06 00</a>
+</div></div>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div><div class="logo" style="color:#fff;font-size:20px;margin-bottom:12px"><div class="mark">GMK</div>GMK Otomotiv</div><p>Ankara Yenimahalle'de Renault, Fiat ve Dacia yedek parça uzmanı. Orijinal ve kaliteli muadil parçaları güvenilir markalardan tedarik ederek güncel fiyatlarla sunuyoruz.</p></div>
+    <div><h5>Kurumsal</h5><ul><li>Hakkımızda</li><li>İletişim</li><li>Kargo & Teslimat</li><li>İade Koşulları</li></ul></div>
+    <div><h5>Markalar</h5><ul><li>Renault</li><li>Fiat</li><li>Dacia</li><li>Tüm Ürünler</li></ul></div>
+    <div><h5>İletişim</h5><ul><li>📍 Yenimahalle, Ankara</li><li>☎ 0542 126 06 00</li><li>✉ info@gmkoto.com</li><li>🕒 Hafta içi 08:30 – 19:00, Cmt 09:00 – 17:00</li></ul></div>
+  </div>
+  <div class="copy"><span>© 2026 GMK Otomotiv. Tüm hakları saklıdır.</span><span>KVKK · Gizlilik · Çerez Politikası</span></div>
+</div></footer>
+</body></html>
